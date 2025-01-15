@@ -8,19 +8,16 @@ const app = express();
 const PORT = 3000;
 
 //подключение к бд
-const sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
-    host: 'localhost',
-    dialect: 'mariadb' });
-
-
-
-
+var sequelize; 
 
 // Middleware для обработки данных форм 123S
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/initDB',async (req, res) => {
+    sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
+        host: 'localhost',
+        dialect: 'mariadb' });
     //авторизация бд
     await sequelize.authenticate();
 
