@@ -12,52 +12,56 @@ const sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
     host: 'localhost',
     dialect: 'mariadb' });
 
-//авторизация бд
-await sequelize.authenticate();
 
-const User = sequelize.define(
-    'User',
-    {
-        ID: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        firstName: {
-            type: DataTypes.STRING,
-
-        },
-        lastName: {
-            type: DataTypes.STRING,
-
-        },
-        patronymic: {
-            type: DataTypes.STRING,
-
-        },
-        groupNumber: {
-            type: DataTypes.STRING,
-
-        },
-        courseNumber: {
-            type: DataTypes.INTEGER,
-
-        },
-    },
-    {
-        
-    }
-);
-
-await sequelize.sync ({
-    force:true
-})
 
 
 
 // Middleware для обработки данных форм 123S
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+app.get('/initDB',async (req, res) => {
+    //авторизация бд
+    await sequelize.authenticate();
+
+    const User = sequelize.define(
+        'User',
+        {
+            ID: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            firstName: {
+                type: DataTypes.STRING,
+
+            },
+            lastName: {
+                type: DataTypes.STRING,
+
+            },
+            patronymic: {
+                type: DataTypes.STRING,
+
+            },
+            groupNumber: {
+                type: DataTypes.STRING,
+
+            },
+            courseNumber: {
+                type: DataTypes.INTEGER,
+
+            },
+        },
+        {
+            
+        }
+    );
+
+    await sequelize.sync ({
+        force:true
+    })
+})
 
 
 app.get('/', (req, res) => {
