@@ -14,7 +14,7 @@ var sequelize;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-/*app.get('/initDB',async (req, res) => {
+app.get('/initDB',async (req, res) => {
     sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
         host: 'mariadb',
         dialect: 'mariadb' });
@@ -59,7 +59,7 @@ app.use(express.static('public'));
         force:true
     })
 })
-*/
+
 
 app.get('/', (req, res) => {
     res.send(`
