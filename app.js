@@ -141,7 +141,7 @@ app.post('/result', async (req, res) => {
     console.log({
         newUser
     })
-    const newDBUser = await User.create(newUser);
+   // const newDBUser = await User.create(newUser);
     
     console.log({
         newDBUser
