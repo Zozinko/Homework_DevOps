@@ -20,7 +20,7 @@ jobs:
         run: docker compose up -d --build
         
       - name: Wait for API run
-        run: sleep 10
+        run: sleep 5
 
       #доступность адреса + состояние контейнеров
       - name: Ping API

@@ -135,13 +135,13 @@ app.post('/result', async(req, res) => {
     `);
 });
 
-//вытаскивание данных
+/*//вытаскивание данных
 app.get('/getUsers', async(req, res)=>{
     const users = User.findAll();
     res.send(JSON.stringify(users));
 }
 )
-
+*/
 
 
 // Запуск сервера
