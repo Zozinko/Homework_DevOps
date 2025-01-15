@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Echo Test
+        run: echo "Running basic tests!"
+
       - name: Build Docker image
         run: docker compose up -d --build
         
