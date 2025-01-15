@@ -117,6 +117,7 @@ app.post('/result', async (req, res) => {
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
     // создал объект с даными из рекуест боди
+    console.log('deb')
     const newUser = {
         lastName, 
         firstName,
@@ -126,8 +127,14 @@ app.post('/result', async (req, res) => {
     }
 
     //записали в бд
+    console.log({
+        newUser
+    })
     const newDBUser = await User.create(newUser);
-
+    
+    console.log({
+        newDBUser
+    })
     res.send(`
         <h1>Результаты</h1>
         <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
