@@ -98,7 +98,7 @@ app.get('/', (req, res) => {
     `);
 });
 
-app.post('/result', async(req, res) => {
+app.post('/result', (req, res) => {
     const { firstName, lastName, patronymic, groupNumber } = req.body;
 
     // Проверяем валидность формата номера группы
