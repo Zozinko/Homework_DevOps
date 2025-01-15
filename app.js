@@ -1,7 +1,7 @@
 // Импортируем необходимые модули
 const express = require('express');
 const bodyParser = require('body-parser');
-//const { Sequelize, DataTypes} = require('sequelize');
+const { Sequelize, DataTypes} = require('sequelize');
 
 // Создаем приложение Express
 const app = express();
