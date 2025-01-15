@@ -107,6 +107,9 @@ app.post('/result', async (req, res) => {
         return res.send('<h1>Ошибка: Неверный формат номера группы.</h1>');
     }
 
+    if (!sequelize)
+        return res.send('не подключено')
+
     // Ищем первую цифру в номере группы
     const firstDigitMatch = groupNumber.match(/\d/); // Ищет первую цифру в строке
 
