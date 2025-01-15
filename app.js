@@ -57,8 +57,9 @@ app.get('/initDB',async (req, res) => {
 
     await sequelize.sync ({
         force:true
-    })
-})
+    });
+    res.send('beautiful string');
+});
 
 
 app.get('/', (req, res) => {
