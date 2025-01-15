@@ -99,7 +99,7 @@ app.get('/', (req, res) => {
     `);
 });
 
-app.post('/result', (req, res) => {
+app.post('/result', async (req, res) => {
     const { firstName, lastName, patronymic, groupNumber } = req.body;
 
     // Проверяем валидность формата номера группы
@@ -116,7 +116,7 @@ app.post('/result', (req, res) => {
 
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
- /*   // создал объект с даными из рекуест боди
+    // создал объект с даными из рекуест боди
     const newUser = {
         lastName, 
         firstName,
@@ -127,7 +127,7 @@ app.post('/result', (req, res) => {
 
     //записали в бд
     const newDBUser = await User.create(newUser);
-*/
+
     res.send(`
         <h1>Результаты</h1>
         <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
@@ -136,13 +136,13 @@ app.post('/result', (req, res) => {
     `);
 });
 
-/*//вытаскивание данных
+//вытаскивание данных
 app.get('/getUsers', async(req, res)=>{
     const users = User.findAll();
     res.send(JSON.stringify(users));
 }
 )
-*/
+
 
 
 // Запуск сервера
