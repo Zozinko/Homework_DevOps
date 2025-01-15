@@ -1,7 +1,23 @@
 version: "3.8"
 
 services:
+
+  mariadb:
+    container_name: web-mariadb-16
+    hostname: mariadb
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: HomeworkDevOps
+      MARIADB_USER: root
+      MARIADB_PASSWORD: password
+    ports:
+      - "0.0.0.0:3306:3306"
+
   api:
+    depends_on:
+      - web-mariadb-16
     build:
       context: .
       dockerfile: Dockerfile
