@@ -22,6 +22,12 @@ app.get('/initDB',async (req, res) => {
     });
     //авторизация бд
     await sequelize.authenticate();
+    const result = {
+        isDefined: sequelize.isDefined('User'),
+        models: sequelize.models
+    }
+
+    res.send(result)
 
     const User = sequelize.define(
         'User',
