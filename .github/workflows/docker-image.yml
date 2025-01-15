@@ -35,4 +35,6 @@ jobs:
         run: | 
           curl --location 'http://127.0.0.1:3000/result' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'lastName=df' --data-urlencode 'firstName=df' --data-urlencode 'patronymic=ва' --data-urlencode 'groupNumber=НМТ-413901'
 
+      - name: check DB data
+        run: curl -X GET http://127.0.0.1:3000/getUsers
 

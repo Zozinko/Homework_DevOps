@@ -1,10 +1,59 @@
 // Импортируем необходимые модули
 const express = require('express');
 const bodyParser = require('body-parser');
+const { Sequelize, DataTypes} = require('sequelize');
 
 // Создаем приложение Express
 const app = express();
 const PORT = 3000;
+
+//подключение к бд
+const sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
+    host: 'localhost',
+    dialect: 'mariadb' });
+
+//авторизация бд
+await sequelize.authenticate();
+
+const User = sequelize.define(
+    'User',
+    {
+        ID: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        firstName: {
+            type: DataTypes.STRING,
+
+        },
+        lastName: {
+            type: DataTypes.STRING,
+
+        },
+        patronymic: {
+            type: DataTypes.STRING,
+
+        },
+        groupNumber: {
+            type: DataTypes.STRING,
+
+        },
+        courseNumber: {
+            type: DataTypes.INTEGER,
+
+        },
+    },
+    {
+        
+    }
+);
+
+await sequelize.sync ({
+    force:true
+})
+
+
 
 // Middleware для обработки данных форм 123S
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -48,7 +97,7 @@ app.get('/', (req, res) => {
     `);
 });
 
-app.post('/result', (req, res) => {
+app.post('/result', async(req, res) => {
     const { firstName, lastName, patronymic, groupNumber } = req.body;
 
     // Проверяем валидность формата номера группы
@@ -65,6 +114,18 @@ app.post('/result', (req, res) => {
 
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
+    // создал объект с даными из рекуест боди
+    const newUser = {
+        lastName, 
+        firstName,
+        patronymic,
+        groupNumber,
+        courseNumber: course
+    }
+
+    //записали в бд
+    const newDBUser = await User.create(newUser);
+
     res.send(`
         <h1>Результаты</h1>
         <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
@@ -72,6 +133,14 @@ app.post('/result', (req, res) => {
         <p>Курс: ${course}</p>
     `);
 });
+
+//вытаскивание данных
+app.get('/getUsers', async(req, res)=>{
+    const users = User.findAll();
+    res.send(JSON.stringify(users));
+}
+)
+
 
 
 // Запуск сервера
