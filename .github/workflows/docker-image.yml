@@ -33,7 +33,7 @@ jobs:
           docker ps -a
 
       - name: Send data
-        run: curl --location 'http://127.0.0.1:3000' --form 'surname="Иванов"' --form 'name="Иван"' --form 'patronymic="Иванович"' --form 'group="НМТ-413901"'
+        run: curl --location 'http://127.0.0.1:3000' --form 'lastName="Иванов"' --form 'firstName="Иван"' --form 'patronymic="Иванович"' --form 'groupNumber="НМТ-413901"'
 
       - name: get students
         run: curl -X GET http://127.0.0.1:3000/result
