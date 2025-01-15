@@ -16,7 +16,7 @@ app.use(express.static('public'));
 
 app.get('/initDB',async (req, res) => {
     sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
-        host: 'localhost',
+        host: 'mariadb',
         dialect: 'mariadb' });
     //авторизация бд
     await sequelize.authenticate();
