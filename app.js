@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-// Middleware для обработки данных форм
+// Middleware для обработки данных форм 123S
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
