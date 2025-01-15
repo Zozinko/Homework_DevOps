@@ -14,7 +14,7 @@ var sequelize;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.get('/initDB',async (req, res) => {
+/*app.get('/initDB',async (req, res) => {
     sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
         host: 'mariadb',
         dialect: 'mariadb' });
@@ -59,7 +59,7 @@ app.get('/initDB',async (req, res) => {
         force:true
     })
 })
-
+*/
 
 app.get('/', (req, res) => {
     res.send(`
@@ -115,7 +115,7 @@ app.post('/result', async(req, res) => {
 
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
-    // создал объект с даными из рекуест боди
+ /*   // создал объект с даными из рекуест боди
     const newUser = {
         lastName, 
         firstName,
@@ -126,7 +126,7 @@ app.post('/result', async(req, res) => {
 
     //записали в бд
     const newDBUser = await User.create(newUser);
-
+*/
     res.send(`
         <h1>Результаты</h1>
         <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
