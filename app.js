@@ -22,12 +22,7 @@ app.get('/initDB',async (req, res) => {
     });
     //авторизация бд
     await sequelize.authenticate();
-    const result = {
-        isDefined: sequelize.isDefined('User'),
-        models: sequelize.models
-    }
 
-    res.send(result)
 
     const User = sequelize.define(
         'User',
@@ -66,7 +61,12 @@ app.get('/initDB',async (req, res) => {
     await sequelize.sync ({
         force:true
     });
-    res.send('beautiful string');
+    const result = {
+        isDefined: sequelize.isDefined('User'),
+        models: sequelize.models
+    }
+
+    res.send(result)
 });
 
 
