@@ -36,4 +36,4 @@ jobs:
         run: curl --location 'http://127.0.0.1:3000' --form 'surname="Иванов"' --form 'name="Иван"' --form 'patronymic="Иванович"' --form 'group="НМТ-413901"'
 
       - name: get students
-  run: curl -X GET http://127.0.0.1:3000/result
+        run: curl -X GET http://127.0.0.1:3000/result
