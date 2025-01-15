@@ -3,27 +3,34 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - worked2
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Шаг 1: Клонирование репозитория в CI/CD
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Шаг 2: Проверка кода
-      - name: Echo Test
-        run: echo "Running basic tests!"
-
-      # Шаг 3: Сборка Docker образа (локальная проверка)
       - name: Build Docker image
         run: docker compose up -d --build
+        
+      - name: Wait for API run
+        run: sleep 10
 
-      - name: Wait for the API to be ready
-        run: sleep 10  # Подождите 10 секунд перед выполнением запроса
+      - name: CreateTabe
+        run: | 
+         curl -X GET http://127.0.0.1:3000
+         docker ps -a
 
       - name: Ping API
-        run: curl -X GET http://127.0.0.1:3000/
+        run: |
+          curl -X GET --fail http://127.0.0.1:3000 || exit 1
+          docker ps -a
+
+      - name: Send data
+        run: curl --location 'http://127.0.0.1:3000' --form 'surname="Иванов"' --form 'name="Иван"' --form 'patronymic="Иванович"' --form 'group="НМТ-413901"'
+
+      - name: get students
+  run: curl -X GET http://127.0.0.1:3000/result
