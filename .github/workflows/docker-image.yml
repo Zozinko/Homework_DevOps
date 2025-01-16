@@ -22,14 +22,18 @@ jobs:
       - name: Wait for API run
         run: sleep 10
 
-      # #доступность адреса + состояние контейнеров
-      # - name: Ping API
-      #   run: |
-      #     curl -X GET --fail http://127.0.0.1:3000 || exit 1
-      #     docker ps -a
+      #доступность адреса + состояние контейнеров
+      - name: Ping API
+        run: |
+          curl -X GET --fail http://127.0.0.1:3000 || exit 1
+          docker ps -a
 
       - name: check DB
         run: docker logs web-mariadb-16
+      
+      - name: init DB
+        run: curl -X GET http://127.0.0.1:3000/initDB
+      
 
       - name: Send data and get student
         run: | 
@@ -37,4 +41,5 @@ jobs:
 
       - name: check DB data
         run: curl -X GET http://127.0.0.1:3000/getUsers
+        
 
