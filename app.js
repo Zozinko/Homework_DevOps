@@ -43,9 +43,6 @@ const User = sequelize.define(
             type: DataTypes.INTEGER,
 
         },
-    },
-    {
-        
     }
 );
 
