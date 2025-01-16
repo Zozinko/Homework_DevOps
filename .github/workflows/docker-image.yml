@@ -30,10 +30,6 @@ jobs:
 
       - name: check DB
         run: docker logs web-mariadb-16
-      
-      - name: init DB
-        run: curl -X GET http://127.0.0.1:3000/initDB
-      
 
       - name: Send data and get student
         run: | 
@@ -41,5 +37,4 @@ jobs:
 
       - name: check DB data
         run: curl -X GET http://127.0.0.1:3000/getUsers
-        
 
