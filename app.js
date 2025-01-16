@@ -1,73 +1,18 @@
 // Импортируем необходимые модули
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Sequelize, DataTypes} = require('sequelize');
+const { Student } = require('./models');
 
 // Создаем приложение Express
 const app = express();
 const PORT = 3000;
 
-//подключение к бд
-var sequelize; 
+
 
 // Middleware для обработки данных форм 123S
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.get('/initDB',async (req, res) => {
-    sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
-        host: 'mariadb',
-        dialect: 'mariadb',
-        port: 3306
-    });
-    //авторизация бд
-    await sequelize.authenticate();
-
-
-    const User = sequelize.define(
-        'User',
-        {
-            ID: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true,
-            },
-            firstName: {
-                type: DataTypes.STRING,
-
-            },
-            lastName: {
-                type: DataTypes.STRING,
-
-            },
-            patronymic: {
-                type: DataTypes.STRING,
-
-            },
-            groupNumber: {
-                type: DataTypes.STRING,
-
-            },
-            courseNumber: {
-                type: DataTypes.INTEGER,
-
-            },
-        },
-        {
-            
-        }
-    );
-
-    await sequelize.sync ({
-        force:true
-    });
-    const result = {
-        isDefined: sequelize.isDefined('User'),
-        models: sequelize.models
-    }
-
-    res.send(result)
-});
 
 
 app.get('/', (req, res) => {
@@ -127,31 +72,26 @@ app.post('/result', async (req, res) => {
 
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
-    // создал объект с даными из рекуест боди
-    console.log('deb')
-    const newUser = {
-        lastName, 
-        firstName,
-        patronymic,
-        groupNumber,
-        courseNumber: course
-    }
+    try {
+        // Сохраняем данные в базе
+        await Student.create({
+            lastName,
+            firstName,
+            patronymic,
+            groupNumber,
+            course,
+        });
 
-    //записали в бд
-    console.log({
-        newUser
-    })
-   // const newDBUser = await User.create(newUser);
-    
-    console.log({
-        newDBUser
-    })
-    res.send(`
-        <h1>Результаты</h1>
-        <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
-        <p>Номер группы: ${groupNumber}</p>
-        <p>Курс: ${course}</p>
-    `);
+        res.send(`
+            <h1>Данные успешно записаны</h1>
+            <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
+            <p>Номер группы: ${groupNumber}</p>
+            <p>Курс: ${course}</p>
+        `);
+    } catch (error) {
+        console.error('Ошибка записи в базу данных:', error);
+        res.send('<h1>Ошибка записи в базу данных.</h1>');
+    }
 });
 
 //вытаскивание данных

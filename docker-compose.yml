@@ -1,26 +1,20 @@
-version: "3.8"
-
+version: '3.8'
 services:
-
-  mariadb:
-    container_name: web-mariadb-16
-    hostname: mariadb
-    image: mariadb:10.5
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: password
-      MARIADB_DATABASE: HomeworkDevOps
-      MARIADB_USER: root
-      MARIADB_PASSWORD: password
-    ports:
-      - "0.0.0.0:3306:3306"
-
-  api:
-    depends_on:
-      - mariadb
-    build:
-      context: .
-      dockerfile: Dockerfile
+  app:
+    build: .
     ports:
       - "3000:3000"
-    restart: unless-stopped
+    depends_on:
+      - mariadb
+    environment:
+      DB_HOST: mariadb
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_NAME: student_app
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: student_app
+    ports:
+      - "3306:3306"
