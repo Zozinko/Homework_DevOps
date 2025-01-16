@@ -20,7 +20,7 @@ jobs:
         run: docker compose up -d --build
         
       - name: Wait for API run
-        run: sleep 5
+        run: sleep 10
 
       #доступность адреса + состояние контейнеров
       - name: Ping API
@@ -29,7 +29,7 @@ jobs:
           docker ps -a
 
       - name: check DB
-        run: docker logs homework_devops-mariadb-1
+        run: docker logs web-mariadb-16
       
       - name: init DB
         run: curl -X GET http://127.0.0.1:3000/initDB
@@ -37,7 +37,7 @@ jobs:
 
       - name: Send data and get student
         run: | 
-          curl --location 'http://127.0.0.1:3000/result' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'lastName=df' --data-urlencode 'firstName=df' --data-urlencode 'patronymic=df' --data-urlencode 'groupNumber=pd-413901'
+          curl --location 'http://127.0.0.1:3000/result' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'lastName=df' --data-urlencode 'firstName=df' --data-urlencode 'patronymic=ва' --data-urlencode 'groupNumber=НМТ-413901'
 
       - name: check DB data
         run: curl -X GET http://127.0.0.1:3000/getUsers

@@ -1,18 +1,64 @@
 // Импортируем необходимые модули
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Student } = require('./models');
+const { Sequelize, DataTypes} = require('sequelize');
 
 // Создаем приложение Express
 const app = express();
 const PORT = 3000;
 
-
+//подключение к бд
+var sequelize; 
 
 // Middleware для обработки данных форм 123S
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+app.get('/initDB',async (req, res) => {
+    sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
+        host: 'mariadb',
+        dialect: 'mariadb' });
+    //авторизация бд
+    await sequelize.authenticate();
+
+    const User = sequelize.define(
+        'User',
+        {
+            ID: {
+                type: DataTypes.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
+            firstName: {
+                type: DataTypes.STRING,
+
+            },
+            lastName: {
+                type: DataTypes.STRING,
+
+            },
+            patronymic: {
+                type: DataTypes.STRING,
+
+            },
+            groupNumber: {
+                type: DataTypes.STRING,
+
+            },
+            courseNumber: {
+                type: DataTypes.INTEGER,
+
+            },
+        },
+        {
+            
+        }
+    );
+
+    await sequelize.sync ({
+        force:true
+    })
+})
 
 
 app.get('/', (req, res) => {
@@ -52,16 +98,13 @@ app.get('/', (req, res) => {
     `);
 });
 
-app.post('/result', async (req, res) => {
+app.post('/result', async(req, res) => {
     const { firstName, lastName, patronymic, groupNumber } = req.body;
 
     // Проверяем валидность формата номера группы
     if (!/^[A-Za-zА-Яа-я0-9-]+$/.test(groupNumber)) {
         return res.send('<h1>Ошибка: Неверный формат номера группы.</h1>');
     }
-
-    if (!sequelize)
-        return res.send('не подключено')
 
     // Ищем первую цифру в номере группы
     const firstDigitMatch = groupNumber.match(/\d/); // Ищет первую цифру в строке
@@ -72,26 +115,24 @@ app.post('/result', async (req, res) => {
 
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
-    try {
-        // Сохраняем данные в базе
-        await Student.create({
-            lastName,
-            firstName,
-            patronymic,
-            groupNumber,
-            course,
-        });
-
-        res.send(`
-            <h1>Данные успешно записаны</h1>
-            <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
-            <p>Номер группы: ${groupNumber}</p>
-            <p>Курс: ${course}</p>
-        `);
-    } catch (error) {
-        console.error('Ошибка записи в базу данных:', error);
-        res.send('<h1>Ошибка записи в базу данных.</h1>');
+    // создал объект с даными из рекуест боди
+    const newUser = {
+        lastName, 
+        firstName,
+        patronymic,
+        groupNumber,
+        courseNumber: course
     }
+
+    //записали в бд
+    const newDBUser = await User.create(newUser);
+
+    res.send(`
+        <h1>Результаты</h1>
+        <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
+        <p>Номер группы: ${groupNumber}</p>
+        <p>Курс: ${course}</p>
+    `);
 });
 
 //вытаскивание данных
