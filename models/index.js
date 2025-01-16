@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 
 // Подключение к базе данных
 const sequelize = new Sequelize('student_app', 'root', 'password', {
-    host: 'localhost', // Замените на 'mariadb', если используете Docker
+    host: 'mariadb',
     dialect: 'mariadb',
     logging: false, // Отключить логи SQL-запросов
 });
