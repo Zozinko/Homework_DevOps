@@ -9,7 +9,7 @@ const PORT = 3000;
 
 //подключение к бд
 const sequelize = new Sequelize('HomeworkDevOps', 'root', 'password', {
-    host: 'localhost',
+    host: 'mariadb',
     dialect: 'mariadb' });
 
 //авторизация бд
