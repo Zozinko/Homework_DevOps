@@ -39,9 +39,6 @@ app.get('/', (req, res) => {
 
                     <button type="submit">Отправить</button>
                 </form>
-                <div class="result">
-                    <p>Результат:</p>
-                </div>
             </div>
         </body>
         </html>
