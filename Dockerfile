@@ -15,6 +15,8 @@ RUN npm install
 
 # Копируем исходный код приложения
 COPY . .
+RUN npm install sequelize mariadb
+
 
 # Указываем порт, который будет использовать приложение
 EXPOSE 3000
