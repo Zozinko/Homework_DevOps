@@ -66,10 +66,26 @@ app.post('/result', (req, res) => {
     const course = parseInt(firstDigitMatch[0], 10); // Преобразуем найденную цифру в число
 
     res.send(`
-        <h1>Результаты</h1>
-        <p>ФИО: ${lastName} ${firstName} ${patronymic}</p>
-        <p>Номер группы: ${groupNumber}</p>
-        <p>Курс: ${course}</p>
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Результат</title>
+            <link rel="stylesheet" href="/style.css">
+        </head>
+        <body>
+            <div class="container">
+                <h1>Результат</h1>
+                <p>Фамилия: ${lastName}</p>
+                <p>Имя: ${firstName}</p>
+                <p>Отчество: ${patronymic}</p>
+                <p>Группа: ${groupNumber}</p>
+                <p>Курс: ${course}</p>
+                <a href="/">Назад</a>
+            </div>
+        </body>
+        </html>
     `);
 });
 
