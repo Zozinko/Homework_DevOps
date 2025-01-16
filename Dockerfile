@@ -12,7 +12,7 @@ COPY style.css /app/public/
 
 # Устанавливаем зависимости
 RUN npm install
-RUN npm install sequelize mariadb
+
 # Копируем исходный код приложения
 COPY . .
 
